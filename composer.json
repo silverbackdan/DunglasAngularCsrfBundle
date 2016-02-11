@@ -25,6 +25,7 @@
         "behat/behat": "~3.0",
         "symfony/form": "~2.4|~3.0",
         "symfony/validator": "~2.4|~3.0",
+        "symfony/twig-bundle": "~2.4|~3.0",
         "sensio/framework-extra-bundle": "~3.0"
     },
     "autoload": {
