@@ -38,6 +38,14 @@ class AngularCsrfValidationListener
      * @var string
      */
     protected $headerName;
+    /**
+     * @var string
+     */
+    protected $headerEnabled;
+    /**
+     * @var string
+     */
+    protected $cookieName;
 
     /**
      * @param AngularCsrfTokenManager $angularCsrfTokenManager
@@ -49,12 +57,16 @@ class AngularCsrfValidationListener
         AngularCsrfTokenManager $angularCsrfTokenManager,
         RouteMatcherInterface $routeMatcher,
         array $routes,
-        $headerName
+        $headerName,
+        $headerEnabled,
+        $cookieName
     ) {
         $this->angularCsrfTokenManager = $angularCsrfTokenManager;
         $this->routeMatcher = $routeMatcher;
         $this->routes = $routes;
         $this->headerName = $headerName;
+        $this->headerEnabled = $headerEnabled;
+        $this->cookieName = $cookieName;
     }
 
     /**
@@ -74,7 +86,8 @@ class AngularCsrfValidationListener
             return;
         }
 
-        $value = $event->getRequest()->headers->get($this->headerName);
+        $request = $event->getRequest();
+        $value = $this->headerEnabled ? $request->headers->get($this->headerName) : $request->cookies->get($this->cookieName);
         if (!$value || !$this->angularCsrfTokenManager->isTokenValid($value)) {
             throw new AccessDeniedHttpException('Bad CSRF token.');
         }

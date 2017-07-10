@@ -40,6 +40,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('name')->cannotBeEmpty()->defaultValue('X-XSRF-TOKEN')->end()
+                        ->booleanNode('enabled')->defaultTrue()->end()
                     ->end()
                 ->end()
                 ->arrayNode('cookie')
